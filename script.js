@@ -1,189 +1,349 @@
-// Função para alternar entre o modo escuro e claro
+document.addEventListener("DOMContentLoaded", () => {
+  setToggleIcon();
+  const toggleBtn = document.getElementById("toggle-dark-mode");
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", toggleDarkMode);
+  }
+  // Página de Despesas
+  if (document.getElementById("expense-form")) {
+    document.getElementById("expense-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      addExpense();
+    });
+    loadExpenses();
+  }
+  // Página de Receitas
+  if (document.getElementById("revenue-form")) {
+    document.getElementById("revenue-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      addRevenue();
+    });
+    loadRevenues();
+  }
+  // Página de Resumo
+  if (document.getElementById("summary")) {
+    loadSummary();
+  }
+  // Página de Gráficos
+  if (document.getElementById("expensesChart") &&
+      document.getElementById("revenuesChart") &&
+      document.getElementById("totalChart")) {
+    loadCharts();
+  }
+});
+
+// ––– Modo Escuro –––
 function toggleDarkMode() {
-  const body = document.body;
-  const currentMode = body.classList.contains('dark') ? 'dark' : 'light';
-
-  if (currentMode === 'light') {
-    body.classList.add('dark');
-    localStorage.setItem('theme', 'dark');  // Salva a preferência no localStorage
-  } else {
-    body.classList.remove('dark');
-    localStorage.setItem('theme', 'light');  // Salva a preferência no localStorage
-  }
+  document.body.classList.toggle("dark");
+  localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+  setToggleIcon();
 }
 
-// Função para verificar e aplicar o tema salvo no localStorage
-function applySavedTheme() {
-  const savedTheme = localStorage.getItem('theme');
+function setToggleIcon() {
+  const btn = document.getElementById("toggle-dark-mode");
+  if (!btn) return;
   
-  // Se o tema estiver salvo como 'dark', aplica o modo escuro
-  if (savedTheme === 'dark') {
-    document.body.classList.add('dark');
-  }
+  const isDarkMode = localStorage.getItem("darkMode") === "true";
+  document.body.classList.toggle("dark", isDarkMode);
+
+  btn.innerHTML = isDarkMode ? getSunIcon() : getMoonIcon();
 }
 
-// Função para adicionar uma despesa
-function adicionarDespesa() {
-  const descricao = document.getElementById("descricao").value;
-  const valor = parseFloat(document.getElementById("valor").value);
-  const categoria = document.getElementById("categoria").value;
-  const data = document.getElementById("data").value;
-  
-  if (!descricao || !valor || !categoria || !data) {
-    alert("Por favor, preencha todos os campos.");
+function getSunIcon() {
+  return `
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="4" stroke-width="2"></line>
+      <line x1="12" y1="20" x2="12" y2="23" stroke-width="2"></line>
+      <line x1="4.22" y1="4.22" x2="6.34" y2="6.34" stroke-width="2"></line>
+      <line x1="17.66" y1="17.66" x2="19.78" y2="19.78" stroke-width="2"></line>
+      <line x1="1" y1="12" x2="4" y2="12" stroke-width="2"></line>
+      <line x1="20" y1="12" x2="23" y2="12" stroke-width="2"></line>
+      <line x1="4.22" y1="19.78" x2="6.34" y2="17.66" stroke-width="2"></line>
+      <line x1="17.66" y1="6.34" x2="19.78" y2="4.22" stroke-width="2"></line>
+    </svg>
+  `;
+}
+function getMoonIcon() {
+  return `
+    <svg viewBox="0 0 24 24">
+      <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+    </svg>
+  `;
+}
+
+// ––– Despesas –––
+function getExpenses() {
+  return JSON.parse(localStorage.getItem("despesas")) || [];
+}
+function saveExpenses(expenses) {
+  localStorage.setItem("despesas", JSON.stringify(expenses));
+}
+function addExpense() {
+  const desc = document.getElementById("expense-desc").value.trim();
+  const valueStr = document.getElementById("expense-value").value.replace(",", ".").trim();
+  const category = document.getElementById("expense-category").value;
+  const date = document.getElementById("expense-date").value;
+  if (!desc || !valueStr || !date || isNaN(valueStr) || parseFloat(valueStr) <= 0) {
+    alert("Por favor, preencha todos os campos com valores válidos.");
     return;
   }
-
-  // Cria um novo objeto de despesa
-  const despesa = {
-    descricao: descricao,
-    valor: valor,
-    categoria: categoria,
-    data: data
+  const expense = {
+    descricao: desc,
+    valor: parseFloat(valueStr),
+    categoria: category,
+    data: date
   };
-
-  // Adiciona a despesa no localStorage
-  let despesas = JSON.parse(localStorage.getItem("despesas")) || [];
-  despesas.push(despesa);
-  localStorage.setItem("despesas", JSON.stringify(despesas));
-
-  // Limpa os campos do formulário
-  document.getElementById("descricao").value = "";
-  document.getElementById("valor").value = "";
-  document.getElementById("categoria").value = "";
-  document.getElementById("data").value = "";
-
-  alert("Despesa adicionada com sucesso!");
+  const expenses = getExpenses();
+  expenses.push(expense);
+  saveExpenses(expenses);
+  clearExpenseFields();
+  loadExpenses();
+}
+function loadExpenses() {
+  const expenses = getExpenses();
+  const tbody = document.querySelector("#expense-table tbody");
+  tbody.innerHTML = "";
+  expenses.forEach((exp, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${exp.descricao}</td>
+      <td>R$ ${exp.valor.toFixed(2)}</td>
+      <td>${exp.categoria}</td>
+      <td>${exp.data}</td>
+      <td><button class="remove-btn" onclick="removeExpense(${index})">❌</button></td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+function removeExpense(index) {
+  let expenses = getExpenses();
+  expenses.splice(index, 1);
+  saveExpenses(expenses);
+  loadExpenses();
+}
+function clearExpenseFields() {
+  document.getElementById("expense-desc").value = "";
+  document.getElementById("expense-value").value = "";
+  document.getElementById("expense-category").value = "Alimentação";
+  document.getElementById("expense-date").value = "";
 }
 
-// Função para adicionar uma receita
-function adicionarReceita() {
-  const descricao = document.getElementById("descricao").value;
-  const valor = parseFloat(document.getElementById("valor").value);
-  const categoria = document.getElementById("categoria").value;
-  const data = document.getElementById("data").value;
-  
-  if (!descricao || !valor || !categoria || !data) {
-    alert("Por favor, preencha todos os campos.");
+// ––– Receitas –––
+function getRevenues() {
+  return JSON.parse(localStorage.getItem("receitas")) || [];
+}
+function saveRevenues(revenues) {
+  localStorage.setItem("receitas", JSON.stringify(revenues));
+}
+function addRevenue() {
+  const desc = document.getElementById("revenue-desc").value.trim();
+  const valueStr = document.getElementById("revenue-value").value.replace(",", ".").trim();
+  const category = document.getElementById("revenue-category").value;
+  const date = document.getElementById("revenue-date").value;
+  if (!desc || !valueStr || !date || isNaN(valueStr) || parseFloat(valueStr) <= 0) {
+    alert("Por favor, preencha todos os campos com valores válidos.");
     return;
   }
-
-  // Cria um novo objeto de receita
-  const receita = {
-    descricao: descricao,
-    valor: valor,
-    categoria: categoria,
-    data: data
+  const revenue = {
+    descricao: desc,
+    valor: parseFloat(valueStr),
+    categoria: category,
+    data: date
   };
-
-  // Adiciona a receita no localStorage
-  let receitas = JSON.parse(localStorage.getItem("receitas")) || [];
-  receitas.push(receita);
-  localStorage.setItem("receitas", JSON.stringify(receitas));
-
-  // Limpa os campos do formulário
-  document.getElementById("descricao").value = "";
-  document.getElementById("valor").value = "";
-  document.getElementById("categoria").value = "";
-  document.getElementById("data").value = "";
-
-  alert("Receita adicionada com sucesso!");
+  const revenues = getRevenues();
+  revenues.push(revenue);
+  saveRevenues(revenues);
+  clearRevenueFields();
+  loadRevenues();
+}
+function loadRevenues() {
+  const revenues = getRevenues();
+  const tbody = document.querySelector("#revenue-table tbody");
+  tbody.innerHTML = "";
+  revenues.forEach((rev, index) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${rev.descricao}</td>
+      <td>R$ ${rev.valor.toFixed(2)}</td>
+      <td>${rev.categoria}</td>
+      <td>${rev.data}</td>
+      <td><button class="remove-btn" onclick="removeRevenue(${index})">❌</button></td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+function removeRevenue(index) {
+  let revenues = getRevenues();
+  revenues.splice(index, 1);
+  saveRevenues(revenues);
+  loadRevenues();
+}
+function clearRevenueFields() {
+  document.getElementById("revenue-desc").value = "";
+  document.getElementById("revenue-value").value = "";
+  document.getElementById("revenue-category").value = "Salário";
+  document.getElementById("revenue-date").value = "";
 }
 
-// Função para gerar o resumo de despesas, receitas e saldo
-function gerarResumo() {
-  const despesas = JSON.parse(localStorage.getItem("despesas")) || [];
-  const receitas = JSON.parse(localStorage.getItem("receitas")) || [];
+// ––– Resumo –––
+function loadSummary() {
+  const expenses = getExpenses();
+  const revenues = getRevenues();
   
-  let totalDespesas = 0;
-  let totalReceitas = 0;
-
-  despesas.forEach(despesa => {
-    totalDespesas += despesa.valor;
-  });
-
-  receitas.forEach(receita => {
-    totalReceitas += receita.valor;
-  });
-
-  const saldo = totalReceitas - totalDespesas;
-
-  // Preenche o resumo na página
-  document.getElementById("total-despesas").innerText = `R$ ${totalDespesas.toFixed(2)}`;
-  document.getElementById("total-receitas").innerText = `R$ ${totalReceitas.toFixed(2)}`;
-  document.getElementById("saldo").innerText = `R$ ${saldo.toFixed(2)}`;
-}
-
-// Função para exibir a lista de despesas e receitas
-function exibirDespesasReceitas() {
-  const despesas = JSON.parse(localStorage.getItem("despesas")) || [];
-  const receitas = JSON.parse(localStorage.getItem("receitas")) || [];
-
-  const despesasTable = document.getElementById("despesas-tabela");
-  const receitasTable = document.getElementById("receitas-tabela");
-
-  // Exibe as despesas na tabela
-  despesasTable.innerHTML = "";
-  despesas.forEach(despesa => {
-    const row = `<tr>
-      <td>${despesa.descricao}</td>
-      <td>R$ ${despesa.valor.toFixed(2)}</td>
-      <td>${despesa.categoria}</td>
-      <td>${despesa.data}</td>
-    </tr>`;
-    despesasTable.innerHTML += row;
-  });
-
-  // Exibe as receitas na tabela
-  receitasTable.innerHTML = "";
-  receitas.forEach(receita => {
-    const row = `<tr>
-      <td>${receita.descricao}</td>
-      <td>R$ ${receita.valor.toFixed(2)}</td>
-      <td>${receita.categoria}</td>
-      <td>${receita.data}</td>
-    </tr>`;
-    receitasTable.innerHTML += row;
-  });
-}
-
-// Função para gerar os gráficos (para gráficos, você pode usar alguma biblioteca como Chart.js)
-function gerarGraficos() {
-  // Exemplo de função para gerar gráficos - pode ser expandido conforme necessidade
-  const despesas = JSON.parse(localStorage.getItem("despesas")) || [];
-  const receitas = JSON.parse(localStorage.getItem("receitas")) || [];
-
-  let categoriasDespesas = {};
-  let categoriasReceitas = {};
-
-  despesas.forEach(despesa => {
-    if (!categoriasDespesas[despesa.categoria]) {
-      categoriasDespesas[despesa.categoria] = 0;
+  // Agrupa despesas por categoria
+  let expenseByCat = {};
+  expenses.forEach(exp => {
+    if (!expenseByCat[exp.categoria]) {
+      expenseByCat[exp.categoria] = 0;
     }
-    categoriasDespesas[despesa.categoria] += despesa.valor;
+    expenseByCat[exp.categoria] += exp.valor;
   });
-
-  receitas.forEach(receita => {
-    if (!categoriasReceitas[receita.categoria]) {
-      categoriasReceitas[receita.categoria] = 0;
+  
+  // Agrupa receitas por categoria
+  let revenueByCat = {};
+  revenues.forEach(rev => {
+    if (!revenueByCat[rev.categoria]) {
+      revenueByCat[rev.categoria] = 0;
     }
-    categoriasReceitas[receita.categoria] += receita.valor;
+    revenueByCat[rev.categoria] += rev.valor;
   });
-
-  // Aqui você pode integrar com o Chart.js ou outra biblioteca para gerar gráficos dinâmicos.
+  
+  // Monta a tabela detalhada de despesas
+  let expenseHTML = "<table><thead><tr><th>Categoria</th><th>Total (R$)</th></tr></thead><tbody>";
+  let totalExpenses = 0;
+  for (let cat in expenseByCat) {
+    let catTotal = expenseByCat[cat];
+    totalExpenses += catTotal;
+    expenseHTML += `<tr><td>${cat}</td><td>R$ ${catTotal.toFixed(2)}</td></tr>`;
+  }
+  expenseHTML += `<tr><td><strong>Total</strong></td><td><strong>R$ ${totalExpenses.toFixed(2)}</strong></td></tr>`;
+  expenseHTML += "</tbody></table>";
+  
+  // Monta a tabela detalhada de receitas
+  let revenueHTML = "<table><thead><tr><th>Categoria</th><th>Total (R$)</th></tr></thead><tbody>";
+  let totalRevenues = 0;
+  for (let cat in revenueByCat) {
+    let catTotal = revenueByCat[cat];
+    totalRevenues += catTotal;
+    revenueHTML += `<tr><td>${cat}</td><td>R$ ${catTotal.toFixed(2)}</td></tr>`;
+  }
+  revenueHTML += `<tr><td><strong>Total</strong></td><td><strong>R$ ${totalRevenues.toFixed(2)}</strong></td></tr>`;
+  revenueHTML += "</tbody></table>";
+  
+  let balance = totalRevenues - totalExpenses;
+  
+  document.getElementById("expense-summary").innerHTML = expenseHTML;
+  document.getElementById("revenue-summary").innerHTML = revenueHTML;
+  document.getElementById("totals").innerHTML = `
+    <p><strong>Total de Despesas:</strong> R$ ${totalExpenses.toFixed(2)}</p>
+    <p><strong>Total de Receitas:</strong> R$ ${totalRevenues.toFixed(2)}</p>
+    <p><strong>Saldo:</strong> R$ ${balance.toFixed(2)}</p>
+  `;
 }
 
-// Função de inicialização para cada página
-function initPage() {
-  applySavedTheme();  // Aplica o tema salvo ao carregar a página
+// ––– Gráficos –––
+function loadCharts() {
+  // Despesas por categoria
+  const expenses = getExpenses();
+  let expenseByCat = {};
+  expenses.forEach(exp => {
+    if (!expenseByCat[exp.categoria]) expenseByCat[exp.categoria] = 0;
+    expenseByCat[exp.categoria] += exp.valor;
+  });
+  const expenseLabels = Object.keys(expenseByCat);
+  const expenseData = Object.values(expenseByCat).map(val => parseFloat(val.toFixed(2)));
+  
+  // Receitas por categoria
+  const revenues = getRevenues();
+  let revenueByCat = {};
+  revenues.forEach(rev => {
+    if (!revenueByCat[rev.categoria]) revenueByCat[rev.categoria] = 0;
+    revenueByCat[rev.categoria] += rev.valor;
+  });
+  const revenueLabels = Object.keys(revenueByCat);
+  const revenueData = Object.values(revenueByCat).map(val => parseFloat(val.toFixed(2)));
+  
+  // Totais gerais
+  const totalExpenses = expenses.reduce((acc, cur) => acc + cur.valor, 0);
+  const totalRevenues = revenues.reduce((acc, cur) => acc + cur.valor, 0);
+  const balance = totalRevenues - totalExpenses;
+  
+  // Gráfico de Despesas (Pie)
+  const ctxExpenses = document.getElementById("expensesChart").getContext("2d");
+  new Chart(ctxExpenses, {
+    type: 'pie',
+    data: {
+      labels: expenseLabels,
+      datasets: [{
+        label: 'Despesas por Categoria',
+        data: expenseData,
+        backgroundColor: generateColors(expenseLabels.length),
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' },
+      }
+    }
+  });
+  
+  // Gráfico de Receitas (Pie)
+  const ctxRevenues = document.getElementById("revenuesChart").getContext("2d");
+  new Chart(ctxRevenues, {
+    type: 'pie',
+    data: {
+      labels: revenueLabels,
+      datasets: [{
+        label: 'Receitas por Categoria',
+        data: revenueData,
+        backgroundColor: generateColors(revenueLabels.length),
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'bottom' },
+      }
+    }
+  });
+  
+  // Gráfico Total e Saldo (Bar)
+  const ctxTotal = document.getElementById("totalChart").getContext("2d");
+  new Chart(ctxTotal, {
+    type: 'bar',
+    data: {
+      labels: ['Total Despesas', 'Total Receitas', 'Saldo'],
+      datasets: [{
+        label: 'Valores (R$)',
+        data: [totalExpenses.toFixed(2), totalRevenues.toFixed(2), balance.toFixed(2)],
+        backgroundColor: [
+          'rgba(220,53,69,0.7)',    // Despesas
+          'rgba(40,167,69,0.7)',     // Receitas
+          'rgba(23,162,184,0.7)'     // Saldo
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+        }
+      }
+    }
+  });
 }
 
-// Executa a inicialização ao carregar a página
-document.addEventListener('DOMContentLoaded', initPage);
-
-// Adiciona evento ao botão de alternância do modo escuro
-const darkModeButton = document.getElementById('toggle-dark-mode');
-if (darkModeButton) {
-  darkModeButton.addEventListener('click', toggleDarkMode);
+// Função auxiliar para gerar cores aleatórias
+function generateColors(n) {
+  let colors = [];
+  for (let i = 0; i < n; i++) {
+    colors.push(`hsl(${Math.floor(Math.random() * 360)}, 70%, 60%)`);
+  }
+  return colors;
 }
-
