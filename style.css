@@ -233,7 +233,7 @@ table th,
 table td {
   padding: 0.75rem;
   border: 1px solid #ddd;
-  text-align: center; /* CENTRALIZA O CONTEÚDO */
+  text-align: center;
   font-size: 1rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -312,7 +312,7 @@ body.dark table tbody tr:hover {
   }
   table.mobile-table td {
     display: block;
-    text-align: center; /* CENTRALIZA O CONTEÚDO NAS CELULAS */
+    text-align: center;
     font-size: 0.9rem;
     padding: 0.5rem 0;
     position: relative;
@@ -329,7 +329,6 @@ body.dark table tbody tr:hover {
   }
 }
 
-
 /* CHARTS */
 .chart-container {
   margin: 2rem 0;
@@ -343,7 +342,6 @@ body.dark table tbody tr:hover {
 }
 
 /* RESPONSIVE ADJUSTMENTS */
-/* Para telas pequenas: reduzir fontes e paddings */
 @media (max-width: 600px) {
   .container {
     padding: 1.5rem;
@@ -363,7 +361,6 @@ body.dark table tbody tr:hover {
   }
 }
 
-/* Para telas muito pequenas */
 @media (max-width: 400px) {
   .container {
     padding: 1rem;
