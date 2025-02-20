@@ -34,21 +34,27 @@
       <button type="submit" class="main-button">Adicionar Receita</button>
     </form>
     <h3>Lista de Receitas</h3>
-    <table id="revenue-table">
+    <table class="mobile-table" id="expense-table">
       <thead>
         <tr>
           <th>Descrição</th>
           <th>Valor (R$)</th>
           <th>Categoria</th>
-          <th data-label="Data">Data</th>
+          <th>Data</th>
           <th>Ação</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Linhas serão adicionadas via JavaScript -->
+        <tr>
+          <td data-label="Descrição"></td>
+          <td data-label="Valor"></td>
+          <td data-label="Categoria"></td>
+          <td data-label="Data"></td>
+          <td data-label="Ação"><button class="remove-btn">❌</button></td>
+        </tr>
+        <!-- Outras linhas -->
       </tbody>
     </table>
-    
   </div>
   <script src="script.js"></script>
 </body>
