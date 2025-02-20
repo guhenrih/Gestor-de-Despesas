@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resumo - Gerenciador Financeiro</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Fonte Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="nav-bar">
+    <a href="index.html">Início</a>
+    <a href="despesas.html">Despesas</a>
+    <a href="receitas.html">Receitas</a>
+    <a href="resumo.html" class="active">Resumo</a>
+    <a href="graficos.html">Gráficos</a>
+  </nav>
+  <div class="container">
+    <!-- Botão de modo escuro -->
+    <button id="toggle-dark-mode" title="Alternar Modo Escuro"></button>
+    <h2>Resumo Financeiro Detalhado</h2>
+    <div id="summary">
+      <h3>Despesas por Categoria</h3>
+      <div id="expense-summary">
+        <!-- Tabela de despesas será gerada aqui -->
+      </div>
+      <h3>Receitas por Categoria</h3>
+      <div id="revenue-summary">
+        <!-- Tabela de receitas será gerada aqui -->
+      </div>
+      <h3>Totais e Saldo</h3>
+      <div id="totals">
+        <!-- Totais gerais e saldo serão exibidos aqui -->
+      </div>
+    </div>
+    <button class="main-button" onclick="window.print()">Imprimir Resumo</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

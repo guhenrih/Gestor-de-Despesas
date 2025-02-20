@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Receitas - Gerenciador Financeiro</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Fonte Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="nav-bar">
+    <a href="index.html">Início</a>
+    <a href="despesas.html">Despesas</a>
+    <a href="receitas.html" class="active">Receitas</a>
+    <a href="resumo.html">Resumo</a>
+    <a href="graficos.html">Gráficos</a>
+  </nav>
+  <div class="container">
+    <!-- Botão de modo escuro -->
+    <button id="toggle-dark-mode" title="Alternar Modo Escuro"></button>
+    <h2>Adicionar Receita</h2>
+    <form id="revenue-form">
+      <input type="text" id="revenue-desc" placeholder="Descrição (Ex: Salário, Venda)" required>
+      <input type="text" id="revenue-value" placeholder="Valor (Ex: 2500.00)" required>
+      <select id="revenue-category">
+        <option value="Salário">Salário</option>
+        <option value="Freelance">Freelance</option>
+        <option value="Investimentos">Investimentos</option>
+        <option value="Venda">Venda</option>
+        <option value="Outros">Outros</option>
+      </select>
+      <input type="date" id="revenue-date" required>
+      <button type="submit" class="main-button">Adicionar Receita</button>
+    </form>
+    <h3>Lista de Receitas</h3>
+    <table id="revenue-table">
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Valor (R$)</th>
+          <th>Categoria</th>
+          <th>Data</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Linhas serão adicionadas via JavaScript -->
+      </tbody>
+    </table>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

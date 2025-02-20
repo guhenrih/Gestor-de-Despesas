@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gráficos - Gerenciador Financeiro</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Fonte Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <nav class="nav-bar">
+    <a href="index.html">Início</a>
+    <a href="despesas.html">Despesas</a>
+    <a href="receitas.html">Receitas</a>
+    <a href="resumo.html">Resumo</a>
+    <a href="graficos.html" class="active">Gráficos</a>
+  </nav>
+  <div class="container">
+    <!-- Botão de modo escuro -->
+    <button id="toggle-dark-mode" title="Alternar Modo Escuro"></button>
+    <h2>Gráficos e Análises</h2>
+    <p>Visualize suas despesas e receitas por categoria e analise os totais gerais e o saldo.</p>
+    <div class="chart-container">
+      <h3>Despesas por Categoria</h3>
+      <canvas id="expensesChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>Receitas por Categoria</h3>
+      <canvas id="revenuesChart"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>Total Geral e Saldo</h3>
+      <canvas id="totalChart"></canvas>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

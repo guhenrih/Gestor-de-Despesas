@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Despesas - Gerenciador Financeiro</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Fonte Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="nav-bar">
+    <a href="index.html">Início</a>
+    <a href="despesas.html" class="active">Despesas</a>
+    <a href="receitas.html">Receitas</a>
+    <a href="resumo.html">Resumo</a>
+    <a href="graficos.html">Gráficos</a>
+  </nav>
+  <div class="container">
+    <!-- Botão de modo escuro -->
+    <button id="toggle-dark-mode" title="Alternar Modo Escuro"></button>
+    <h2>Adicionar Despesa</h2>
+    <form id="expense-form">
+      <input type="text" id="expense-desc" placeholder="Descrição (Ex: Mercado, Combustível)" required>
+      <input type="text" id="expense-value" placeholder="Valor (Ex: 1500.75)" required>
+      <select id="expense-category">
+        <option value="Alimentação">Alimentação</option>
+        <option value="Transporte">Transporte</option>
+        <option value="Lazer">Lazer</option>
+        <option value="Saúde">Saúde</option>
+        <option value="Educação">Educação</option>
+        <option value="Moradia">Moradia</option>
+        <option value="Utilidades">Utilidades</option>
+        <option value="Compras">Compras</option>
+        <option value="Roupas">Roupas</option>
+        <option value="Entretenimento">Entretenimento</option>
+        <option value="Viagem">Viagem</option>
+        <option value="Comunicação">Comunicação</option>
+        <option value="Finanças">Finanças</option>
+        <option value="Serviços">Serviços</option>
+        <option value="Impostos">Impostos</option>
+        <option value="Investimentos">Investimentos</option>
+        <option value="Presentes">Presentes</option>
+        <option value="Cuidados Pessoais">Cuidados Pessoais</option>
+        <option value="Pets">Pets</option>
+        <option value="Restaurantes">Restaurantes</option>
+        <option value="Cartão de crédito/Fatura">Cartão de crédito/Fatura</option>
+        <option value="Outros">Outros</option>
+      </select>
+      <input type="date" id="expense-date" required>
+      <button type="submit" class="main-button">Adicionar Despesa</button>
+    </form>
+    <h3>Lista de Despesas</h3>
+    <table id="expense-table">
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Valor (R$)</th>
+          <th>Categoria</th>
+          <th>Data</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Linhas serão adicionadas via JavaScript -->
+      </tbody>
+    </table>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
