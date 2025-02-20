@@ -32,12 +32,13 @@ h1, h2, h3 {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .nav-bar a {
   color: #fff;
   text-decoration: none;
-  margin: 0 1rem;
+  margin: 0.5rem 1rem;
   font-weight: 500;
   transition: color 0.3s;
 }
@@ -63,14 +64,14 @@ body.dark .nav-bar a {
   padding: 2rem;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   position: relative;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 body.dark .container {
   background: #1e1e1e;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* Seção Hero (Página Inicial) */
@@ -96,6 +97,7 @@ body.dark .container {
   display: flex;
   justify-content: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .hero-buttons .btn {
@@ -160,7 +162,7 @@ form button {
 form input:focus, 
 form select:focus {
   border-color: #007bff;
-  box-shadow: 0 0 10px rgba(0,123,255,0.5);
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
 }
 
 form select {
@@ -177,7 +179,7 @@ form button {
   cursor: pointer;
   border-radius: 8px;
   transition: background 0.3s, transform 0.1s;
-  box-shadow: 0 4px 6px rgba(0,123,255,0.3);
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
 }
 
 form button:hover {
@@ -218,6 +220,7 @@ table td {
   font-size: 16px;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  white-space: normal;
 }
 
 table th {
@@ -233,7 +236,7 @@ table tbody tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Distribuição de Largura das Colunas para Tabelas de 5 Colunas */
+/* Proporções fixas para tabelas de 5 colunas */
 #expense-table th:nth-child(1),
 #revenue-table th:nth-child(1) {
   width: 40%;
@@ -289,7 +292,7 @@ body.dark table tbody tr:hover {
   max-width: 100%;
   height: 400px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 body.dark .chart-container {
@@ -313,7 +316,7 @@ body.dark .chart-container {
   margin-top: 1.5rem;
 }
 
-/* Responsividade para Telas Pequenas */
+/* Responsividade Geral para Telas Pequenas */
 @media (max-width: 600px) {
   .container {
     width: 95%;
@@ -329,22 +332,26 @@ body.dark .chart-container {
     flex-direction: column;
     gap: 0.8rem;
   }
-  /* Ajuste de Tabelas */
+  /* Ajusta a fonte da tabela para telas menores */
   table {
-    table-layout: auto; /* Permite que as colunas se ajustem conforme o conteúdo */
     font-size: 0.9em;
   }
-  /* Remove larguras fixas para colunas em telas pequenas */
-  #expense-table th,
-  #revenue-table th {
-    width: auto !important;
+  table th, table td {
+    padding: 8px;
   }
   form button {
     padding: 10px;
   }
 }
 
-/* Estilos para Impressão */
+/* Responsividade Extra para Telas Muito Pequenas */
+@media (max-width: 400px) {
+  table {
+    font-size: 0.8em;
+  }
+}
+
+/* Impressão */
 @media print {
   body {
     background-color: #fff;
