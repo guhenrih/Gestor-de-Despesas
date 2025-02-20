@@ -91,6 +91,22 @@ body.dark .container {
   background: #0D47A1;
 }
 
+/* Botão de Modo Escuro */
+.dark-mode-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+.dark-mode-button svg {
+  width: 24px;
+  height: 24px;
+  fill: #808080;
+}
+
 /* Inputs e Botões */
 input, select, button.main-button {
   width: 100%;
@@ -117,42 +133,6 @@ button.main-button {
 }
 button.main-button:hover {
   background-color: #1565C0;
-}
-
-/* Botão de Modo Escuro */
-#toggle-dark-mode {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 5px;
-}
-#toggle-dark-mode svg {
-  width: 24px;
-  height: 24px;
-  fill: #808080;
-}
-
-/* Tabelas */
-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-}
-table, th, td {
-  border: 1px solid #ddd;
-  text-align: center;
-}
-th, td {
-  padding: 12px;
-}
-th {
-  background-color: #e0e0e0;
-}
-body.dark th {
-  background-color: #616161;
 }
 
 /* Layout de Impressão */
