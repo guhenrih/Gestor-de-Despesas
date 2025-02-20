@@ -51,7 +51,7 @@
       <button type="submit" class="main-button">Adicionar Despesa</button>
     </form>
     <h3>Lista de Despesas</h3>
-    <table id="expense-table">
+    <table class="mobile-table" id="expense-table">
       <thead>
         <tr>
           <th>Descrição</th>
@@ -62,9 +62,17 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Linhas serão adicionadas via JavaScript -->
+        <tr>
+          <td data-label="Descrição">Mercado</td>
+          <td data-label="Valor">R$ 150.00</td>
+          <td data-label="Categoria">Alimentação</td>
+          <td data-label="Data">2025-02-20</td>
+          <td data-label="Ação"><button class="remove-btn">❌</button></td>
+        </tr>
+        <!-- Outras linhas -->
       </tbody>
     </table>
+    
   </div>
   <script src="script.js"></script>
 </body>
