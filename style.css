@@ -1,246 +1,184 @@
-/* Importa a fonte Roboto */
+/* Reset Geral */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo da Página */
 body {
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  /* Reset e Box Sizing */
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Nav Bar */
-  .nav-bar {
-    background: linear-gradient(90deg, #2196F3, #1976D2);
-    padding: 15px;
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .nav-bar a {
-    color: #fff;
-    margin: 0 15px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
-  }
-  .nav-bar a:hover,
-  .nav-bar a.active {
-    color: #B0BEC5;  /* cinza claro */
-  }
-  
-  /* Body */
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Modo Escuro */
+body.dark {
+  background-color: #212121;
+  color: #e0e0e0;
+}
+
+/* Container Geral */
+.container {
+  max-width: 900px;
+  width: 90%;
+  background: #fff;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+body.dark .container {
+  background: #2e2e2e;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Navbar */
+.nav-bar {
+  background: linear-gradient(90deg, #1565C0, #1E88E5);
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nav-bar a {
+  color: #fff;
+  margin: 0 15px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.nav-bar a:hover,
+.nav-bar a.active {
+  color: #B0BEC5;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  background: linear-gradient(135deg, #2196F3, #64B5F6);
+  color: white;
+  padding: 50px 30px;
+  border-radius: 10px;
+}
+.hero h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+.hero p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.hero-buttons a {
+  text-decoration: none;
+  padding: 12px 25px;
+  background: #1565C0;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+.hero-buttons a:hover {
+  background: #0D47A1;
+}
+
+/* Inputs e Botões */
+input, select, button.main-button {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: all 0.3s;
+}
+body.dark input,
+body.dark select,
+body.dark button.main-button {
+  background-color: #424242;
+  border: 1px solid #555;
+  color: #e0e0e0;
+}
+button.main-button {
+  background-color: #1E88E5;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+}
+button.main-button:hover {
+  background-color: #1565C0;
+}
+
+/* Botão de Modo Escuro */
+#toggle-dark-mode {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+#toggle-dark-mode svg {
+  width: 24px;
+  height: 24px;
+  fill: #808080;
+}
+
+/* Tabelas */
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+table, th, td {
+  border: 1px solid #ddd;
+  text-align: center;
+}
+th, td {
+  padding: 12px;
+}
+th {
+  background-color: #e0e0e0;
+}
+body.dark th {
+  background-color: #616161;
+}
+
+/* Layout de Impressão */
+@media print {
   body {
-    background-color: #f4f4f4;
-    transition: background-color 0.3s, color 0.3s;
+    background: white;
+    color: black;
   }
-  body.dark {
-    background-color: #303030;
-    color: #e0e0e0;
+  .nav-bar, 
+  #toggle-dark-mode, 
+  .hero, 
+  .hero-buttons, 
+  button, 
+  input, 
+  select {
+    display: none !important;
   }
-  
-  /* Container */
   .container {
-    max-width: 800px;
-    width: 90%;
-    background: #fff;
-    margin: 30px auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    transition: background-color 0.3s, box-shadow 0.3s;
-  }
-  body.dark .container {
-    background: #424242;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  /* Hero Section (Página Inicial) */
-  .container.hero {
-    text-align: center;
-    background: linear-gradient(135deg, #64B5F6, #90A4AE);
-    color: #fff;
-    padding: 50px 30px;
-    border-radius: 10px;
-  }
-  .container.hero h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-  }
-  .container.hero p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
-  }
-  .hero-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-  }
-  .hero-buttons a {
-    text-decoration: none;
-    padding: 12px 25px;
-    background: #2196F3;
-    color: #fff;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background 0.3s;
-  }
-  .hero-buttons a:hover {
-    background: #1976D2;
-  }
-  body.dark .container.hero {
-    background: linear-gradient(135deg, #1976D2, #546E7A);
-  }
-  body.dark .hero-buttons a {
-    background: #1565C0;
-  }
-  
-  /* Inputs, Selects e Botões Principais */
-  input, select, button.main-button {
+    box-shadow: none;
     width: 100%;
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    padding: 10px;
   }
-  body.dark input,
-  body.dark select,
-  body.dark button.main-button {
-    background-color: #333;
-    border: 1px solid #555;
-    color: #e0e0e0;
-  }
-  button.main-button {
-    background-color: #2196F3;
-    color: #fff;
-    cursor: pointer;
-    border: none;
-    font-weight: bold;
-    transition: background-color 0.3s;
-  }
-  button.main-button:hover {
-    background-color: #1976D2;
-  }
-  
-  /* Tabelas */
   table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-  }
-  table, th, td {
-    border: 1px solid #ddd;
-    text-align: center;
-  }
-  th, td {
-    padding: 12px;
+    border: 1px solid black;
   }
   th {
-    background-color: #e0e0e0;
+    background-color: #ccc;
   }
-  body.dark th {
-    background-color: #616161;
-  }
-  
-  /* Botão Remover */
-  .remove-btn {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    width: 100%;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-  }
-  .remove-btn:hover {
-    background-color: #c82333;
-  }
-  
-  /* Resumo Financeiro */
-  #summary table {
-    width: 100%;
-    margin-bottom: 20px;
-    border-collapse: collapse;
-  }
-  #summary th, #summary td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-  }
-  #summary th {
-    background-color: #e0e0e0;
-  }
-  body.dark #summary th {
-    background-color: #616161;
-  }
-  #totals p {
-    font-size: 1.2em;
-    margin: 10px 0;
-    text-align: center;
-  }
-  
-  /* Chart Container */
-  .chart-container {
-    margin: 30px 0;
-    text-align: center;
-  }
-  .chart-container canvas {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  /* Botão de Modo Escuro */
-  #toggle-dark-mode {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-  }
-  #toggle-dark-mode svg {
-    width: 24px;
-    height: 24px;
-    fill: #808080;
-  }
-  
-  /* Responsividade para Mobiles */
-  @media (max-width: 600px) {
-    .nav-bar {
-      flex-direction: column;
-      padding: 10px;
-    }
-    .nav-bar a {
-      margin: 5px 8px;
-      font-size: 14px;
-    }
-    .container {
-      width: 95%;
-      padding: 20px;
-      margin: 10px auto;
-    }
-    .hero-buttons {
-      flex-direction: column;
-      gap: 10px;
-    }
-    table {
-      font-size: 0.8em;
-      overflow-x: auto;
-      display: block;
-    }
-    /* Ajusta o botão de modo escuro para dispositivos móveis */
-    #toggle-dark-mode {
-      top: 10px;
-      right: 10px;
-    }
-  }
-  
+}
