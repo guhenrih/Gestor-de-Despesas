@@ -34,27 +34,21 @@
       <button type="submit" class="main-button">Adicionar Receita</button>
     </form>
     <h3>Lista de Receitas</h3>
-    <table class="mobile-table" id="expense-table">
+    <table id="revenue-table" class="table-responsive">
       <thead>
         <tr>
           <th>Descrição</th>
-          <th>Valor (R$)</th>
-          <th>Categoria</th>
           <th>Data</th>
-          <th>Ação</th>
+          <th>Valor</th>
+          <th>Categoria</th>
+          <th>Excluir</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td data-label="Descrição"></td>
-          <td data-label="Valor"></td>
-          <td data-label="Categoria"></td>
-          <td data-label="Data"></td>
-          <td data-label="Ação"><button class="remove-btn">❌</button></td>
-        </tr>
-        <!-- Outras linhas -->
+        <!-- Linhas de receitas serão adicionadas aqui dinamicamente -->
       </tbody>
     </table>
+    
   </div>
   <script src="script.js"></script>
 </body>
