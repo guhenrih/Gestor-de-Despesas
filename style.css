@@ -1,10 +1,11 @@
-/* Reset e Base Global */
+/* Reset e Global */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* Corpo e Tipografia */
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #f4f4f4;
@@ -46,7 +47,6 @@ h1, h2, h3 {
   color: #ffeb3b;
 }
 
-/* Nav-Bar - Modo Escuro */
 body.dark .nav-bar {
   background-color: #343a40;
 }
@@ -112,7 +112,6 @@ body.dark .container {
   background: #fdd835;
 }
 
-/* Dark Mode para a Seção Hero */
 body.dark .hero {
   background: linear-gradient(135deg, #0056b3, #003f7f);
 }
@@ -139,7 +138,11 @@ body.dark .hero-buttons .btn {
   fill: #fff;
 }
 
-/* Formulários (Inputs, Selects e Botões) - se utilizados em outras páginas */
+body.dark #toggle-dark-mode svg {
+  fill: #f4f4f4;
+}
+
+/* Formulários: Inputs, Selects e Botões */
 form input, 
 form select, 
 form button {
@@ -193,11 +196,18 @@ form button:disabled {
   box-shadow: none;
 }
 
-/* Tabelas (para páginas de Resumo, Despesas, Receitas, etc.) */
+/* Container Responsivo para Tabelas */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Tabelas (Receitas e Despesas) */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 2rem;
+  table-layout: fixed;
 }
 
 table th, 
@@ -206,6 +216,8 @@ table td {
   border: 1px solid #ddd;
   text-align: left;
   font-size: 16px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 table th {
@@ -221,7 +233,41 @@ table tbody tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Dark Mode para Tabelas */
+/* Distribuição de Largura das Colunas para Tabelas de 5 Colunas */
+#expense-table th:nth-child(1),
+#revenue-table th:nth-child(1) {
+  width: 40%;
+}
+#expense-table th:nth-child(2),
+#revenue-table th:nth-child(2) {
+  width: 15%;
+}
+#expense-table th:nth-child(3),
+#revenue-table th:nth-child(3) {
+  width: 20%;
+}
+#expense-table th:nth-child(4),
+#revenue-table th:nth-child(4) {
+  width: 15%;
+}
+#expense-table th:nth-child(5),
+#revenue-table th:nth-child(5) {
+  width: 10%;
+}
+
+/* Botão de Remoção nas Tabelas */
+table tbody td button {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+table tbody td button:hover {
+  color: #c82333;
+}
+
 body.dark table th {
   background-color: #343a40;
 }
@@ -267,7 +313,7 @@ body.dark .chart-container {
   margin-top: 1.5rem;
 }
 
-/* Responsividade */
+/* Responsividade para Telas Pequenas */
 @media (max-width: 600px) {
   .container {
     width: 95%;
@@ -282,6 +328,19 @@ body.dark .chart-container {
   .hero-buttons {
     flex-direction: column;
     gap: 0.8rem;
+  }
+  /* Ajuste de Tabelas */
+  table {
+    table-layout: auto; /* Permite que as colunas se ajustem conforme o conteúdo */
+    font-size: 0.9em;
+  }
+  /* Remove larguras fixas para colunas em telas pequenas */
+  #expense-table th,
+  #revenue-table th {
+    width: auto !important;
+  }
+  form button {
+    padding: 10px;
   }
 }
 
