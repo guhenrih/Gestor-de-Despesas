@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Receitas - Gerenciador Financeiro</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-receitas.css" />
   <!-- Fonte Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
@@ -45,10 +46,16 @@
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td data-label="Descrição"></td>
+          <td data-label="Data"></td>
+          <td data-label="Valor"></td>
+          <td data-label="Categoria"></td>
+          <td data-label="Ação"><button class="remove-btn">❌</button></td>
+        </tr>
         <!-- Linhas de receitas serão adicionadas aqui dinamicamente -->
       </tbody>
     </table>
-    
   </div>
   <script src="script.js"></script>
 </body>
